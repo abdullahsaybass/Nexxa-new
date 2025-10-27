@@ -32,7 +32,7 @@ app.post("/send-email", async (req, res) => {
       from: `"Nexxa Auto" <noreply@nexxaauto.com>`, // visible sender
       replyTo: email || "noreply@nexxaauto.com", // reply-to user's email
       to: "noreply@nexxaauto.com", // main inbox
-      bcc: "ksaybas3@gmail.com", // optional: for backup copy
+      bcc: "nexxaleads@gmail.com",
       subject: "New Lead from Nexxa Auto",
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">

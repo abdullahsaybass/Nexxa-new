@@ -73,17 +73,17 @@ export default function ProductDetailPage() {
       );
 
       if (response.data.success) {
-        console.log("✅ Email sent successfully!");
+        console.log(" Email sent successfully!");
         setSubmitted(true);
-        setStatus("✅ Inquiry sent successfully! Our team will contact you soon.");
+        setStatus(" Inquiry sent successfully! Our team will contact you soon.");
         setFormData({ email: "", phone: "", zip: "", message: "" });
       } else {
-        console.error("❌ Email failed:", response.data.message);
-        setStatus("❌ Failed to send email. Please try again later.");
+        console.error(" Email failed:", response.data.message);
+        setStatus(" Failed to send email. Please try again later.");
       }
     } catch (error) {
-      console.error("⚠️ Error submitting inquiry:", error);
-      setStatus("⚠️ Something went wrong. Please try again later.");
+      console.error(" Error submitting inquiry:", error);
+      setStatus(" Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -132,14 +132,7 @@ export default function ProductDetailPage() {
               onChange={handleChange}
               required
             />
-            <input
-              type="text"
-              name="zip"
-              placeholder="Enter ZIP code"
-              value={formData.zip}
-              onChange={handleChange}
-              required
-            />
+           
            
             <button type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Request a Quote"}
