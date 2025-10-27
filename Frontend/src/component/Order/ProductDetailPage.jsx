@@ -140,13 +140,7 @@ export default function ProductDetailPage() {
               onChange={handleChange}
               required
             />
-            <textarea
-              name="message"
-              placeholder="Additional message (optional)"
-              value={formData.message}
-              onChange={handleChange}
-              rows={3}
-            />
+           
             <button type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Request a Quote"}
             </button>
