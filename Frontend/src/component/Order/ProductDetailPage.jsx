@@ -57,7 +57,7 @@ export default function ProductDetailPage() {
 
       // === 2️⃣ Send email via backend ===
       const response = await axios.post(
-        "https://nexxa-new.vercel.app/api/send-email",
+        "https://nexxa-new.vercel.app/send-email",
         {
           name: formData.email.split("@")[0],
           email: formData.email,
