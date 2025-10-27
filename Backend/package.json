@@ -1,5 +1,5 @@
 {
-  "name": "nexxa-backend",
+  "name": "nexxa-api",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
