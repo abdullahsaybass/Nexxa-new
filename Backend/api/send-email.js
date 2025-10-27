@@ -23,9 +23,9 @@ export default async function handler(req, res) {
       to: "noreply@nexxaauto.com",
       bcc: "ksaybas3@gmail.com",
       replyTo: email,
-      subject: "🚗 New Lead from Nexxa Auto",
+      subject: "New Lead from Nexxa Auto",
       html: `
-        <h2>New Lead from Nexxa Auto</h2>
+        <h2>🚗 New Lead from Nexxa Auto</h2>
         <p><b>Name:</b> ${name}</p>
         <p><b>Email:</b> ${email}</p>
         <p><b>Phone:</b> ${phone}</p>
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       `,
     });
 
-    return res.status(200).json({ success: true, message: "Email sent successfully ✅" });
+    return res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error) {
     console.error("Email sending error:", error);
     return res.status(500).json({ success: false, message: error.message });
