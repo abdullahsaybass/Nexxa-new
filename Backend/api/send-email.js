@@ -13,13 +13,13 @@ export default async function handler(req, res) {
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER, // sales@nexxaauto.com
-        pass: process.env.EMAIL_PASS, // password
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     await transporter.sendMail({
-      from: `"Nexxa Auto" <noreply@nexxaauto.com>`,
+      from: `"Nexxa Auto" <${process.env.EMAIL_USER}>`,
       to: "noreply@nexxaauto.com",
       bcc: "ksaybas3@gmail.com",
       replyTo: email,
@@ -30,20 +30,16 @@ export default async function handler(req, res) {
         <p><b>Email:</b> ${email}</p>
         <p><b>Phone:</b> ${phone}</p>
         <p><b>ZIP:</b> ${zip}</p>
-        <hr/>
-        <p><b>Year:</b> ${year}</p>
-        <p><b>Make:</b> ${make}</p>
-        <p><b>Model:</b> ${model}</p>
+        <p><b>Vehicle:</b> ${year} ${make} ${model}</p>
         <p><b>Part:</b> ${part}</p>
         <p><b>Stock:</b> ${stock}</p>
-        <hr/>
-        <p><b>Message:</b> ${message || "No message"}</p>
+        <p><b>Message:</b> ${message}</p>
       `,
     });
 
-    res.status(200).json({ success: true, message: "Mail sent successfully!" });
+    return res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error) {
-    console.error("❌ Email error:", error);
-    res.status(500).json({ success: false, message: "Email send failed", error: error.message });
+    console.error("Email sending error:", error);
+    return res.status(500).json({ success: false, message: error.message });
   }
 }
