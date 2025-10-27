@@ -1,62 +1,60 @@
-// import nodemailer from "nodemailer";
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 
-// export default async function handler(req, res) {
-//   if (req.method !== "POST") {
-//     return res.status(405).json({ success: false, message: "Method Not Allowed" });
-//   }
+dotenv.config();
 
-//   const { name, email, phone, zip, year, make, model, part, stock, message } = req.body || {};
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, message: "Method not allowed" });
+  }
 
-//   try {
-//     // 🧩 Check envs
-//     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS || !process.env.SMTP_HOST) {
-//       throw new Error("Missing email configuration in environment variables");
-//     }
+  const { name, email, phone, zip, year, make, model, part, stock, message } = req.body;
 
-//     // ✅ Create transporter
-//     const transporter = nodemailer.createTransport({
-//       host: process.env.SMTP_HOST,
-//       port: 465, // IONOS SSL port
-//       secure: true,
-//       auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS,
-//       },
-//     });
+  try {
+    // ✅ Configure SMTP
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || "smtp.ionos.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-//     // ✅ Verify connection
-//     await transporter.verify();
+    // ✅ Prepare mail content
+    const mailOptions = {
+      from: `"Nexxa Auto" <${process.env.EMAIL_USER}>`,
+      replyTo: email,
+      to: "noreply@nexxaauto.com",
+      bcc: "ksaybas3@gmail.com",
+      subject: "🚗 New Lead from Nexxa Auto",
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h2>New Inquiry from Nexxa Auto</h2>
+          <p><b>Name:</b> ${name || "N/A"}</p>
+          <p><b>Email:</b> ${email || "N/A"}</p>
+          <p><b>Phone:</b> ${phone || "N/A"}</p>
+          <p><b>ZIP:</b> ${zip || "N/A"}</p>
+          <hr/>
+          <p><b>Year:</b> ${year}</p>
+          <p><b>Make:</b> ${make}</p>
+          <p><b>Model:</b> ${model}</p>
+          <p><b>Part:</b> ${part}</p>
+          <p><b>Stock:</b> ${stock}</p>
+          <hr/>
+          <p><b>Message:</b> ${message || "No message provided."}</p>
+          <hr/>
+          <p style="font-size: 12px; color: #777;">Sent automatically via NexxaAuto.com</p>
+        </div>
+      `,
+    };
 
-//     // ✅ Send email
-//     await transporter.sendMail({
-//       from: `"Nexxa Auto" <${process.env.EMAIL_USER}>`,
-//       to: "noreply@nexxaauto.com",
-//       bcc: "ksaybas3@gmail.com",
-//       replyTo: email,
-//       subject: "New Lead from Nexxa Auto",
-//       html: `
-//         <h2>🚗 New Lead</h2>
-//         <p><b>Name:</b> ${name || "N/A"}</p>
-//         <p><b>Email:</b> ${email || "N/A"}</p>
-//         <p><b>Phone:</b> ${phone || "N/A"}</p>
-//         <p><b>ZIP:</b> ${zip || "N/A"}</p>
-//         <hr/>
-//         <p><b>Year:</b> ${year || "N/A"}</p>
-//         <p><b>Make:</b> ${make || "N/A"}</p>
-//         <p><b>Model:</b> ${model || "N/A"}</p>
-//         <p><b>Part:</b> ${part || "N/A"}</p>
-//         <p><b>Stock:</b> ${stock || "N/A"}</p>
-//         <p><b>Message:</b> ${message || "No message provided"}</p>
-//       `,
-//     });
-
-//     res.status(200).json({ success: true, message: "Mail sent successfully!" });
-//   } catch (error) {
-//     console.error("❌ Email API Error:", error.message);
-//     res.status(500).json({
-//       success: false,
-//       message: "Internal server error",
-//       error: error.message,
-//     });
-//   }
-// }
+    await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent successfully!");
+    return res.status(200).json({ success: true, message: "Email sent successfully!" });
+  } catch (error) {
+    console.error("❌ Email error:", error);
+    return res.status(500).json({ success: false, message: "Failed to send email" });
+  }
+}

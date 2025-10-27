@@ -156,104 +156,104 @@
 
 // // ✅ Instead, export for Vercel:
 // export default app;
-import express from "express";
-import nodemailer from "nodemailer";
-import cors from "cors";
-import dotenv from "dotenv";
+// import express from "express";
+// import nodemailer from "nodemailer";
+// import cors from "cors";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
-const app = express();
+// const app = express();
 
-// === ✅ Middleware ===
-app.use(cors({
-  origin: ["https://nexxaauto.com", "https://nexxa-new.vercel.app"], // your frontend domains
-  methods: ["GET", "POST"],
-}));
-app.use(express.json());
+// // === ✅ Middleware ===
+// app.use(cors({
+//   origin: ["https://nexxaauto.com", "https://nexxa-new.vercel.app"], // your frontend domains
+//   methods: ["GET", "POST"],
+// }));
+// app.use(express.json());
 
-// === ✅ API Health Check ===
-app.get("/api", (req, res) => {
-  res.status(200).send("🚀 Nexxa Auto Mail API Running Successfully!");
-});
+// // === ✅ API Health Check ===
+// app.get("/api", (req, res) => {
+//   res.status(200).send("🚀 Nexxa Auto Mail API Running Successfully!");
+// });
 
-// === ✅ EMAIL ROUTE ===
-app.post("/api/send-email", async (req, res) => {
-  const { name, email, phone, zip, year, make, model, part, stock, message } = req.body;
+// // === ✅ EMAIL ROUTE ===
+// app.post("/api/send-email", async (req, res) => {
+//   const { name, email, phone, zip, year, make, model, part, stock, message } = req.body;
 
-  if (!email || !phone || !year || !make || !model || !part) {
-    return res.status(400).json({ success: false, message: "Missing required fields" });
-  }
+//   if (!email || !phone || !year || !make || !model || !part) {
+//     return res.status(400).json({ success: false, message: "Missing required fields" });
+//   }
 
-  try {
-    // === Create transporter using IONOS SMTP ===
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.ionos.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.EMAIL_USER, // sales@nexxaauto.com
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+//   try {
+//     // === Create transporter using IONOS SMTP ===
+//     const transporter = nodemailer.createTransport({
+//       host: process.env.SMTP_HOST || "smtp.ionos.com",
+//       port: 465,
+//       secure: true,
+//       auth: {
+//         user: process.env.EMAIL_USER, // sales@nexxaauto.com
+//         pass: process.env.EMAIL_PASS,
+//       },
+//     });
 
-    // === Compose Email ===
-    const mailOptions = {
-      from: '"Nexxa Auto" <noreply@nexxaauto.com>',
-      replyTo: email,
-      to: "noreply@nexxaauto.com",
-      bcc: "ksaybas3@gmail.com", // internal copy
-      subject: "New Lead from Nexxa Auto",
-      html: `
-        <div style="font-family: Arial, sans-serif; color: #333;">
-          <h2>🚗 New Lead from Nexxa Auto</h2>
-          <p><b>Name:</b> ${name || "N/A"}</p>
-          <p><b>Email:</b> ${email}</p>
-          <p><b>Phone:</b> ${phone}</p>
-          <p><b>ZIP:</b> ${zip || "N/A"}</p>
-          <hr/>
-          <h3>Vehicle & Part Details</h3>
-          <p><b>Year:</b> ${year}</p>
-          <p><b>Make:</b> ${make}</p>
-          <p><b>Model:</b> ${model}</p>
-          <p><b>Part:</b> ${part}</p>
-          <p><b>Stock:</b> ${stock || "N/A"}</p>
-          <hr/>
-          <h3>Message:</h3>
-          <p>${message || "No additional message provided."}</p>
-          <hr/>
-          <p style="font-size: 12px; color: #777;">Sent automatically via NexxaAuto.com</p>
-        </div>
-      `,
-      envelope: {
-        from: "sales@nexxaauto.com",
-        to: "noreply@nexxaauto.com",
-        bcc: "ksaybas3@gmail.com",
-      },
-    };
+//     // === Compose Email ===
+//     const mailOptions = {
+//       from: '"Nexxa Auto" <noreply@nexxaauto.com>',
+//       replyTo: email,
+//       to: "noreply@nexxaauto.com",
+//       bcc: "ksaybas3@gmail.com", // internal copy
+//       subject: "New Lead from Nexxa Auto",
+//       html: `
+//         <div style="font-family: Arial, sans-serif; color: #333;">
+//           <h2>🚗 New Lead from Nexxa Auto</h2>
+//           <p><b>Name:</b> ${name || "N/A"}</p>
+//           <p><b>Email:</b> ${email}</p>
+//           <p><b>Phone:</b> ${phone}</p>
+//           <p><b>ZIP:</b> ${zip || "N/A"}</p>
+//           <hr/>
+//           <h3>Vehicle & Part Details</h3>
+//           <p><b>Year:</b> ${year}</p>
+//           <p><b>Make:</b> ${make}</p>
+//           <p><b>Model:</b> ${model}</p>
+//           <p><b>Part:</b> ${part}</p>
+//           <p><b>Stock:</b> ${stock || "N/A"}</p>
+//           <hr/>
+//           <h3>Message:</h3>
+//           <p>${message || "No additional message provided."}</p>
+//           <hr/>
+//           <p style="font-size: 12px; color: #777;">Sent automatically via NexxaAuto.com</p>
+//         </div>
+//       `,
+//       envelope: {
+//         from: "sales@nexxaauto.com",
+//         to: "noreply@nexxaauto.com",
+//         bcc: "ksaybas3@gmail.com",
+//       },
+//     };
 
-    // === Send the email ===
-    await transporter.sendMail(mailOptions);
-    console.log("✅ Email sent successfully!");
+//     // === Send the email ===
+//     await transporter.sendMail(mailOptions);
+//     console.log("✅ Email sent successfully!");
 
-    return res.status(200).json({ success: true, message: "Email sent successfully!" });
-  } catch (error) {
-    console.error("❌ Email sending error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Failed to send email",
-      error: error.message,
-    });
-  }
-});
+//     return res.status(200).json({ success: true, message: "Email sent successfully!" });
+//   } catch (error) {
+//     console.error("❌ Email sending error:", error);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Failed to send email",
+//       error: error.message,
+//     });
+//   }
+// });
 
-// === ✅ Start server locally OR export for Vercel ===
-const PORT = process.env.PORT || 5000;
+// // === ✅ Start server locally OR export for Vercel ===
+// const PORT = process.env.PORT || 5000;
 
-// 👉 If running locally (node server.js)
-if (process.env.NODE_ENV !== "production") {
-  app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
-}
+// // 👉 If running locally (node server.js)
+// if (process.env.NODE_ENV !== "production") {
+//   app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+// }
 
-// 👉 If deploying to Vercel
-export default app;
+// // 👉 If deploying to Vercel
+// export default app;
