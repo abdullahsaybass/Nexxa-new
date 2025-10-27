@@ -9,21 +9,30 @@ export default function ProductDetailPage() {
   const location = useLocation();
   const { selectedYear, selectedMake, selectedModel, selectedPart } = location.state || {};
 
+  // Default values if navigation state is empty
   const year = selectedYear || "2023";
   const make = selectedMake || "Chevrolet";
   const model = selectedModel || "Malibu";
   const part = selectedPart || "AC Evaporator Housing";
   const stock = 15;
 
-  const [formData, setFormData] = useState({ email: "", phone: "", zip: "", message: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    phone: "",
+    zip: "",
+    message: "",
+  });
+
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [status, setStatus] = useState("");
 
+  // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -31,7 +40,7 @@ export default function ProductDetailPage() {
     setStatus("");
 
     try {
-      //  1️ Store inquiry in Firestore
+      // === 1️⃣ Save inquiry in Firestore ===
       const docRef = await addDoc(collection(db, "productInquiries"), {
         year,
         make,
@@ -41,37 +50,40 @@ export default function ProductDetailPage() {
         email: formData.email,
         phone: formData.phone,
         zip: formData.zip,
-        message: formData.message,
+        message: formData.message || "",
         createdAt: serverTimestamp(),
       });
-      console.log(" Inquiry stored with ID:", docRef.id);
+      console.log("✅ Inquiry stored with ID:", docRef.id);
 
-      //  2️ Send email to backend (update to your production URL)
-      const response = await axios.post("https://nexxa-new.vercel.app/api/send-email", {
-        name: formData.email.split("@")[0],
-        email: formData.email,
-        phone: formData.phone,
-        zip: formData.zip,
-        year,
-        make,
-        model,
-        part,
-        stock,
-        message: formData.message,
-      });
+      // === 2️⃣ Send email via backend ===
+      const response = await axios.post(
+        "https://nexxa-new.vercel.app/api/send-email",
+        {
+          name: formData.email.split("@")[0],
+          email: formData.email,
+          phone: formData.phone,
+          zip: formData.zip,
+          year,
+          make,
+          model,
+          part,
+          stock,
+          message: formData.message,
+        }
+      );
 
       if (response.data.success) {
-        console.log(" Email sent successfully!");
+        console.log("✅ Email sent successfully!");
         setSubmitted(true);
-        setStatus(" Inquiry sent successfully! Our team will contact you soon.");
+        setStatus("✅ Inquiry sent successfully! Our team will contact you soon.");
         setFormData({ email: "", phone: "", zip: "", message: "" });
       } else {
-        console.error(" Failed to send email:", response.data.message);
-        setStatus(" Failed to send email. Please try again later.");
+        console.error("❌ Email failed:", response.data.message);
+        setStatus("❌ Failed to send email. Please try again later.");
       }
     } catch (error) {
-      console.error(" Error submitting inquiry:", error);
-      setStatus(" Something went wrong. Please try again later.");
+      console.error("⚠️ Error submitting inquiry:", error);
+      setStatus("⚠️ Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -79,13 +91,15 @@ export default function ProductDetailPage() {
 
   return (
     <div className="pd-page">
+      {/* === Header Section === */}
       <section className="pd-header">
         <h1>
-          Find Quality Used <span>{part}</span> For {year} {make} {model}
+          Find Quality Used <span>{part}</span> for {year} {make} {model}
         </h1>
         <p>Connect instantly with trusted recyclers and certified suppliers.</p>
       </section>
 
+      {/* === Inquiry Section === */}
       <section className="pd-inquiry-card">
         <h3>
           Currently Available: <span>{stock}</span> in stock
@@ -93,7 +107,7 @@ export default function ProductDetailPage() {
 
         {submitted ? (
           <div className="pd-success-message">
-             Thank you for your inquiry! Our team will contact you shortly.
+            🎉 Thank you for your inquiry! Our team will contact you shortly.
           </div>
         ) : (
           <form className="pd-inquiry-form" onSubmit={handleSubmit}>
@@ -126,6 +140,13 @@ export default function ProductDetailPage() {
               onChange={handleChange}
               required
             />
+            <textarea
+              name="message"
+              placeholder="Additional message (optional)"
+              value={formData.message}
+              onChange={handleChange}
+              rows={3}
+            />
             <button type="submit" disabled={loading}>
               {loading ? "Submitting..." : "Request a Quote"}
             </button>
@@ -135,10 +156,13 @@ export default function ProductDetailPage() {
         {status && <p className="pd-status">{status}</p>}
       </section>
 
+      {/* === Product Info Section === */}
       <section className="pd-product-info">
         <h2>Product Overview</h2>
         <p>
-          Get high-quality OEM replacement parts for your vehicle from our nationwide network of trusted recyclers.
+          Get high-quality OEM replacement parts for your vehicle from our nationwide
+          network of trusted recyclers. Each part is inspected for reliability and comes
+          from verified suppliers to ensure top-notch quality and performance.
         </p>
       </section>
     </div>
