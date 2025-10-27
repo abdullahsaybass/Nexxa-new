@@ -31,7 +31,7 @@ export default function ProductDetailPage() {
     setStatus("");
 
     try {
-      // ✅ 1️⃣ Store inquiry in Firestore
+      //  1️ Store inquiry in Firestore
       const docRef = await addDoc(collection(db, "productInquiries"), {
         year,
         make,
@@ -44,10 +44,10 @@ export default function ProductDetailPage() {
         message: formData.message,
         createdAt: serverTimestamp(),
       });
-      console.log("✅ Inquiry stored with ID:", docRef.id);
+      console.log(" Inquiry stored with ID:", docRef.id);
 
-      // ✅ 2️⃣ Send email to backend (update to your production URL)
-      const response = await axios.post("http://localhost:5000/send-email", {
+      //  2️ Send email to backend (update to your production URL)
+      const response = await axios.post("https://nexxa-new.vercel.app/api/send-email", {
         name: formData.email.split("@")[0],
         email: formData.email,
         phone: formData.phone,
@@ -61,17 +61,17 @@ export default function ProductDetailPage() {
       });
 
       if (response.data.success) {
-        console.log("📧 Email sent successfully!");
+        console.log(" Email sent successfully!");
         setSubmitted(true);
-        setStatus("✅ Inquiry sent successfully! Our team will contact you soon.");
+        setStatus(" Inquiry sent successfully! Our team will contact you soon.");
         setFormData({ email: "", phone: "", zip: "", message: "" });
       } else {
-        console.error("❌ Failed to send email:", response.data.message);
-        setStatus("❌ Failed to send email. Please try again later.");
+        console.error(" Failed to send email:", response.data.message);
+        setStatus(" Failed to send email. Please try again later.");
       }
     } catch (error) {
-      console.error("❌ Error submitting inquiry:", error);
-      setStatus("❌ Something went wrong. Please try again later.");
+      console.error(" Error submitting inquiry:", error);
+      setStatus(" Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -93,7 +93,7 @@ export default function ProductDetailPage() {
 
         {submitted ? (
           <div className="pd-success-message">
-            🎉 Thank you for your inquiry! Our team will contact you shortly.
+             Thank you for your inquiry! Our team will contact you shortly.
           </div>
         ) : (
           <form className="pd-inquiry-form" onSubmit={handleSubmit}>
