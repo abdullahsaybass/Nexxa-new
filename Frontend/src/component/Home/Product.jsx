@@ -1,6 +1,6 @@
 import React from "react";
 import "./Product.css";
-
+import { Link } from "react-router-dom";
 import BMW from "../../assets/BMW.jpeg";
 import Toyato from "../../assets/toyato.webp";
 import Honda from "../../assets/honda.webp";
@@ -11,12 +11,10 @@ import Mercedes from "../../assets/mercedes.webp";
 import Hyundai from "../../assets/images.png";
 import Chevrolet from "../../assets/chervolt.webp";
 import Volkswagen from "../../assets/volkswagan.jpg";
-
 import interior from "../../assets/volkswagan.jpg";
-import exterior from "../../assets/volkswagan.jpg";
-import engine from "../../assets/volkswagan.jpg";
 
 const Product = () => {
+  // === Product Data ===
   const products = [
     { id: 1, tags: ["HOT"], image: BMW, name: "Used BMW Engine Assembly", sku: "BMW-ENG-001", rating: 5, reviews: 12, price: 450 },
     { id: 2, tags: ["SALE"], image: Toyato, name: "Used Toyota Alternator", sku: "TOY-ALT-002", rating: 4, reviews: 8, price: 85 },
@@ -30,11 +28,10 @@ const Product = () => {
     { id: 10, tags: [], image: Volkswagen, name: "Used Volkswagen Gearbox", sku: "VOL-GEA-010", rating: 5, reviews: 18, price: 620 },
   ];
 
- const sidebars = [
-  {
-    
-    items: [
-      "Used Auto Parts",
+  // === Sidebar Items ===
+  const sidebars = [
+    [
+      
       "Used Acura Parts",
       "Used BMW Parts",
       "Used Buick Parts",
@@ -45,25 +42,19 @@ const Product = () => {
       "Used Daihatsu Parts",
       "Used Dodge Parts",
     ],
-  },
-  {
-    
-    items: [
+    [
       "Used Eagle Parts",
       "Used Ford Parts",
       "Used GMC Parts",
       "Used Honda Parts",
       "Used Hyundai Parts",
-      "Used Infiniti Parts",
-      "Used International Parts",
+      
+      
       "Used Isuzu Parts",
       "Used Jaguar Parts",
       "Used Jeep Parts",
     ],
-  },
-  {
-    
-    items: [
+    [
       "Used Kia Parts",
       "Used Landrover Parts",
       "Used Lexus Parts",
@@ -75,12 +66,18 @@ const Product = () => {
       "Used Mitsubishi Parts",
       "Used Nissan Parts",
     ],
-  },
-];
+  ];
 
+  // === Helper Function: Generate Dynamic Link ===
+  const generateLink = (item) => {
+    // Extract brand name (e.g., "Used Acura Parts" → "acura")
+    const brand = item.replace(/Used\s+|\s+Parts/gi, "").trim().toLowerCase().replace(/\s+/g, "-");
+    return `/used-auto-parts/${brand}`;
+  };
 
   return (
     <section className="product-section">
+      {/* === Header === */}
       <div className="product-header">
         <h1>Explore Our Premium Used Auto Parts</h1>
         <p>
@@ -91,7 +88,7 @@ const Product = () => {
       </div>
 
       <div className="product-container">
-        {/* Product Grid */}
+        {/* === Product Grid === */}
         <div className="product-grid">
           {products.map((product) => (
             <div className="product-card" key={product.id}>
@@ -125,7 +122,6 @@ const Product = () => {
                 {"★".repeat(product.rating)}
                 {"☆".repeat(5 - product.rating)}
                 <span className="reviews">
-                  {" "}
                   {product.rating} on {product.reviews} reviews
                 </span>
               </div>
@@ -137,27 +133,26 @@ const Product = () => {
           ))}
         </div>
 
-        {/* Sidebar */}
-        <aside className="sidebar-section">
-          {sidebars.map((sidebar, index) => (
+        {/* === Sidebar === */}
+        <aside className="product-sidebar-section">
+          {sidebars.map((group, idx) => (
             <div
-              className="sidebar-card"
-              key={index}
+              className="product-sidebar-card"
+              key={idx}
               style={{ backgroundImage: `url(${interior})` }}
             >
               <div className="overlay">
-                
                 <ul>
-                  {sidebar.items.map((item, i) => (
-                    <li key={i}>{item}</li>
+                  {group.map((item, i) => (
+                    <li key={i}>
+                      <Link to={generateLink(item)}>{item}</Link>
+                    </li>
                   ))}
                 </ul>
-                
               </div>
             </div>
           ))}
         </aside>
-
       </div>
     </section>
   );

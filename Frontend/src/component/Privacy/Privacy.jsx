@@ -6,7 +6,7 @@ import "./Privacy.css";
 const Privacy = () => {
   return (
     <div>
-      <Header />
+      
 
       <section className="privacy-section">
         <div className="privacy-content">
@@ -20,6 +20,7 @@ const Privacy = () => {
             <ul>
               <li>Telephone calls (including recorded or monitored calls)</li>
               <li>Text messages (SMS/MMS)</li>
+               <li>Mobile Opt in, SMS Consent,  and phone numbers collected for SMS communication purposes will not be shared with any third party or affiliates for marketing purposes.</li>
               <li>Emails or other electronic means</li>
             </ul>
             <p>
@@ -64,7 +65,7 @@ const Privacy = () => {
           <div className="privacy-item">
             <h2>4. Sharing & Disclosure</h2>
             <p>
-              We may share limited data only with trusted suppliers and service providers for communication, shipping, and order fulfillment.  
+              We may share limited data only with trusted suppliers and service providers for communication, shipping, and order fulfillment. We do not share, sell, or rent phone numbers or SMS consent information with third parties or affiliates for marketing or promotional purposes  
               All partners are required to maintain confidentiality and security standards consistent with this policy.
             </p>
           </div>
@@ -143,7 +144,7 @@ const Privacy = () => {
         </div>
       </section>
 
-      <Footer />
+      
     </div>
   );
 };

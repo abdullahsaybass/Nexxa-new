@@ -6,10 +6,10 @@ import WhatWeOffer from './WhatWeOffer'
 const About = () => {
   return (
     <div>
-        <Header />
+        
         <AboutNexxaSection />
         <WhatWeOffer />
-        <Footer />
+        
     </div>
   )
 }

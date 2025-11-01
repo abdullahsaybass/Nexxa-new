@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import "./ContactUs.css";
-import { FaEnvelope, FaPhoneAlt, FaGlobe, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhoneAlt,
+  FaGlobe,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 export default function ContactSection() {
   const [activeSide, setActiveSide] = useState("form");
   const [consent, setConsent] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
-  // Form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -41,23 +46,26 @@ export default function ContactSection() {
 
         <h2 className="contact-heading">Get in Touch with Nexxa Auto Parts</h2>
         <p className="contact-subheading">
-          We specialize in high-quality second-hand OEM car parts. Reach out for inquiries, orders, or support.
+          We specialize in high-quality second-hand OEM car parts. Reach out
+          for inquiries, orders, or support.
         </p>
 
         <div className="contact-container-box">
           <div className="contact-container">
             {/* === Contact Form === */}
             <div
-              className={`contact-form ${activeSide === "form" ? "active-side" : ""}`}
+              className={`contact-form ${
+                activeSide === "form" ? "active-side" : ""
+              }`}
               onClick={() => setActiveSide("form")}
             >
-              <h3 className="form-title">Send Message</h3>
+              <h3 className="form-title">Send Us a Message</h3>
               <form onSubmit={handleSubmit}>
                 <div className="form-row">
                   <div className="form-group">
                     <input
                       type="text"
-                      placeholder=""
+                      placeholder="Full Name"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       required
@@ -66,7 +74,7 @@ export default function ContactSection() {
                   <div className="form-group">
                     <input
                       type="email"
-                      placeholder=""
+                      placeholder="Email Address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -77,7 +85,7 @@ export default function ContactSection() {
                 <div className="form-group">
                   <input
                     type="text"
-                    placeholder=""
+                    placeholder="Subject"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     required
@@ -86,7 +94,7 @@ export default function ContactSection() {
 
                 <div className="form-group">
                   <textarea
-                    placeholder=""
+                    placeholder="Your Message"
                     rows="4"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -100,11 +108,36 @@ export default function ContactSection() {
                     type="checkbox"
                     id="privacyConsent"
                     checked={consent}
-                    onChange={(e) => setConsent(e.target.checked)}
+                    onChange={(e) => {
+                      setConsent(e.target.checked);
+                      if (e.target.checked) setExpanded(false); // auto collapse when checked
+                    }}
                   />
-                  <label htmlFor="privacyConsent">
-                    By using our website and services, you agree to the collection and use of information in accordance with this Privacy Policy.
-                  </label>
+
+                  <div className="privacy-text">
+                    <p
+                      className={`expandable-text ${
+                        expanded ? "expanded" : ""
+                      }`}
+                    >
+                      By checking this box, you agree to receive customer care, account notifications and delivery 
+                      notification SMS messages from NEXXA AUTO PARTS related to Appointment reminders, 
+                      Follow-up messages, Account Updates and Delivery notifications. You may reply STOP 
+                      to opt-out at any time. Reply HELP to (463) 223-5914 for assistance. Messages and 
+                      data rates may apply. Message frequency will vary. Learn more on our privacy policy 
+                      page and Term & Conditions
+                    </p>
+
+                    <span
+                      className="see-more-text"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setExpanded(!expanded);
+                      }}
+                    >
+                      {expanded ? "See less ▲" : "See more ▼"}
+                    </span>
+                  </div>
                 </div>
 
                 <button type="submit" className="send-btn" disabled={!consent}>
@@ -115,13 +148,17 @@ export default function ContactSection() {
 
             {/* === Contact Info === */}
             <div
-              className={`contact-info ${activeSide === "info" ? "active-side" : ""}`}
+              className={`contact-info ${
+                activeSide === "info" ? "active-side" : ""
+              }`}
               onClick={() => setActiveSide("info")}
             >
               <h3 className="info-title">Nexxa Auto Parts</h3>
               <p className="info-description">
-                We’re proud to serve customers nationwide with top-quality second-hand car parts, trusted by
-                thousands of mechanics and vehicle owners. Contact us for genuine OEM replacements at affordable prices.
+                We’re proud to serve customers nationwide with top-quality
+                second-hand car parts, trusted by thousands of mechanics and
+                vehicle owners. Contact us for genuine OEM replacements at
+                affordable prices.
               </p>
 
               <div className="info-grid">
@@ -153,7 +190,11 @@ export default function ContactSection() {
                   <FaMapMarkerAlt className="info-icon" />
                   <div>
                     <h4>Address</h4>
-                    <p>550 Congressional Blvd, Suite 350<br />Carmel, IN 46032</p>
+                    <p>
+                      550 Congressional Blvd, Suite 350
+                      <br />
+                      Carmel, IN 46032
+                    </p>
                   </div>
                 </div>
               </div>

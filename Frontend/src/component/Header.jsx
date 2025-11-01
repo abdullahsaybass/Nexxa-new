@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { FaCar, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Header.css";
+import Logo from "../assets/logo.png";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function Header() {
       {/* === Middle Section === */}
       <div className="middle-section">
         <div className="middle-inner">
-          {/* Left Menu */}
+          {/* === Left Menu === */}
           <div className="left-menu">
             <div className={`mobile-trigger ${menuOpen ? "hide" : ""}`}>
               <button className="menu-btn" onClick={() => setMenuOpen(true)}>
@@ -38,27 +39,27 @@ export default function Header() {
 
             <nav className="nav-links">
               <Link to="/">Home</Link>
-              
               <Link to="/privacy-policy">Privacy Policy</Link>
               <Link to="/about">About</Link>
-              
             </nav>
           </div>
 
-          {/* Center Logo */}
+          {/* === Center Logo === */}
           <div className="center-section">
-            <div className="logo">
-              <h1>
-                <span className="red-text">NEXXA</span> AUTO
-              </h1>
+            <div className="">
+              <Link to="/">
+                <img src={Logo} alt="Nexxa Auto Parts Logo" className="header-logo" />
+              </Link>
             </div>
-            <p className="tagline"></p>
           </div>
 
-          {/* Right Info Buttons */}
+          {/* === Right Buttons === */}
           <div className="right-icons">
             <div className="info-btn">Quality Used Parts</div>
-            <div className="info-btn">Request a Quote</div>
+
+            <Link to="/request-a-parts" className="info-btn">
+              Request a Part
+            </Link>
             <Link to="/terms-and-condition" className="info-btn">
               Terms and Conditions
             </Link>
@@ -83,14 +84,11 @@ export default function Header() {
 
         <ul className="mobile-nav">
           <li><Link to="/">Home</Link></li>
-          
           <li><Link to="/privacy-policy">Privacy Policy</Link></li>
           <li><Link to="/about">About</Link></li>
-          
           <li><Link to="/terms-and-condition">Terms and Conditions</Link></li>
         </ul>
 
-        {/* Contact Info in Mobile Menu */}
         <div className="mobile-footer">
           <p><strong>Call us:</strong> +1 (888) 266-0007</p>
           <p><strong>Email:</strong> info@nexxaauto.com</p>

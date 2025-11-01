@@ -6,9 +6,9 @@ import ContactUs from './ContactUs'
 const Conact = () => {
   return (
     <div>
-      <Header />
+      
       <ContactUs />
-      <Footer />
+      
     </div>
   )
 }

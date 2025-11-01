@@ -46,7 +46,7 @@ export default function Footer() {
               <Link to="/warranty">Warranty Policy</Link>
             </li>
             <li>
-              <Link to="/contact">Contact Support</Link>
+              <Link to="/contact">Contact Us</Link>
             </li>
           </ul>
         </div>

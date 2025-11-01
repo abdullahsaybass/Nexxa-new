@@ -102,27 +102,8 @@ const Tc = () => {
             </p>
           </div>
 
-          {/* === Governing Law === */}
-         
-
-          {/* === Contact Us === */}
-          {/* <div className="tc-item">
-            <h2>Contact Us</h2>
-            <p>
-              <strong>Nexxa Auto Parts</strong>
-              <br />
-              550 Congressional Blvd, Suite 350
-              <br />
-              Carmel, IN 46032
-              <br />
-              📞 +1 (888) 266-0007
-              <br />
-              📧 info@nexxaauto.com
-            </p>
-          </div> */}
-
           {/* ===================================================== */}
-          {/* === NEWLY ADDED 11 POINTS (UPDATED TERMS SECTION) === */}
+          {/* === ADDITIONAL SECTIONS (UPDATED TERMS SECTION) === */}
           {/* ===================================================== */}
           <div className="tc-item">
             <h2>Acceptance of Terms</h2>
@@ -160,11 +141,12 @@ const Tc = () => {
             <h2>Intellectual Property</h2>
             <p>
               All content on the website, including text, graphics, logos, and
-              images, is owned by or licensed to <strong>Nexxa Auto Parts</strong> and is protected by copyright and other intellectual property laws. You may not copy, distribute, or modify any content without our permission.
+              images, is owned by or licensed to <strong>Nexxa Auto Parts</strong> and is
+              protected by copyright and other intellectual property laws. You
+              may not copy, distribute, or modify any content without our
+              permission.
             </p>
           </div>
-
-          
 
           <div className="tc-item">
             <h2>Limitation of Liability</h2>
@@ -209,6 +191,7 @@ const Tc = () => {
             </p>
           </div>
 
+          {/* === Governing Law === */}
           <div className="tc-item">
             <h2>Governing Law</h2>
             <p>
@@ -218,6 +201,125 @@ const Tc = () => {
             </p>
           </div>
 
+          {/* === SMS TERMS & CONDITIONS === */}
+         {/* === SMS TERMS & CONDITIONS === */}
+            <div className="tc-item">
+              <h2 className="tc-heading-sub">SMS Terms &amp; Conditions</h2>
+
+              <div className="sms-item">
+                <h3>1. SMS Consent Communication</h3>
+                <p>
+                  Information (Phone Numbers) obtained as part of the SMS consent process
+                  will not be shared with third parties for marketing purposes.
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>2. Types of SMS Communications</h3>
+                <p>
+                  If consent has been given to receive text messages from{" "}
+                  <strong>Nexxa Auto Parts</strong>, messages may be received related to:
+                </p>
+                <ul>
+                  <li>Appointment reminders</li>
+                  <li>Follow-up messages</li>
+                  <li>Account updates</li>
+                  <li>Delivery notifications</li>
+                </ul>
+                <p className="sms-example">
+                  Example: "Hello, this is a reminder of your upcoming appointment with Dr.
+                  [Name] at [Location] on [Date] at [Time]. Reply STOP to opt out of SMS
+                  messaging at any time."
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>3. Message Frequency</h3>
+                <p>
+                  Message frequency may vary depending on the type of communication. For
+                  example, up to 5 SMS messages per week may be received related to
+                  appointment reminders, follow-up messages, account updates, and delivery
+                  notifications.
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>4. Potential Fees for SMS Messaging</h3>
+                <p>
+                  Standard message and data rates may apply, depending on your carrier's
+                  pricing plan. These fees may vary if the message is sent domestically or
+                  internationally.
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>5. Opt-In Method</h3>
+                <p>
+                  Opt-in to receive SMS messages from Nexxa Auto Parts can be done by
+                  filling out the website form located at:{" "}
+                  <a
+                    href="https://nexxaauto.com/contact"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    https://nexxaauto.com/contact
+                  </a>
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>6. Opt-Out Method</h3>
+                <p>
+                  You may opt out at any time by replying "STOP" to any SMS message
+                  received. Alternatively, contact us directly to request removal from our
+                  messaging list.
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>7. Help</h3>
+                <p>
+                  For assistance, reply with the keyword "HELP" or visit{" "}
+                  <a
+                    href="https://nexxaauto.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    our website
+                  </a>
+                  . You can also refer to our{" "}
+                  <a
+                    href="https://nexxaauto.com/privacypolicy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://nexxaauto.com/termsandconditions"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Terms and Conditions
+                  </a>{" "}
+                  pages.
+                </p>
+              </div>
+
+              <div className="sms-item">
+                <h3>8. Standard Messaging Disclosures</h3>
+                <ul>
+                  <li>Message and data rates may apply.</li>
+                  <li>Opt out at any time by texting "STOP".</li>
+                  <li>For assistance, text "HELP" or visit our support page.</li>
+                  <li>Message frequency may vary.</li>
+                </ul>
+              </div>
+            </div>
+
+
+          {/* === Contact Us === */}
           <div className="tc-item">
             <h2>Contact Us</h2>
             <p>
@@ -229,8 +331,6 @@ const Tc = () => {
               <a href="mailto:info@nexxaauto.com">info@nexxaauto.com</a>
             </p>
           </div>
-
-          
         </div>
       </section>
 

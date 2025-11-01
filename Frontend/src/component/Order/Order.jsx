@@ -5,9 +5,9 @@ import Footer from '../Footer'
 const Order = () => {
   return (
     <div>
-        <Header />
+        
         <ProductDetailPage />
-        <Footer />
+        
     </div>
   )
 }
