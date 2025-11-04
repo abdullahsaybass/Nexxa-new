@@ -41,7 +41,7 @@ app.post("/send-email", async (req, res) => {
           <p><b>Name:</b> ${name}</p>
           <p><b>Email:</b> ${email}</p>
           <p><b>Phone:</b> ${phone}</p>
-          <p><b>Pincode:</b> ${zip}</p>
+          <p><b>Zipcode:</b> ${zip}</p>
           <hr/>
           <p><b>Vehicle Details:</b></p>
           <p>Year: ${year}</p>
