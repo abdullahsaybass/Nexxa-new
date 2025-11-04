@@ -9,74 +9,73 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
-
-// === ✅ EMAIL ROUTE ===
+// === EMAIL ROUTE ===
 app.post("/send-email", async (req, res) => {
-  const { name, email, phone, zip, year, make, model, part, stock, message } = req.body;
+  const { name, email, phone, zip, part, make, model, year } = req.body;
 
   try {
-    // ✅ Configure transporter (IONOS SMTP)
+    // Configure SMTP (IONOS)
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.ionos.com",
       port: 465,
       secure: true,
       auth: {
-        user: process.env.EMAIL_USER, // e.g. noreply@nexxaauto.com
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // billing@nexxaauto.com
+        pass: process.env.EMAIL_PASS, // your IONOS password
       },
     });
 
-    // ✅ Email structure
+    // Unique ID to prevent email threading in inbox
+    const uniqueId = Date.now();
+
+    // Email details
     const mailOptions = {
-      from: `"Nexxa Auto" <noreply@nexxaauto.com>`, // visible sender
-      replyTo: email || "noreply@nexxaauto.com", // reply-to user's email
-      to: "noreply@nexxaauto.com", // main inbox
-      bcc: "nexxaleads@gmail.com",
-      subject: "New Lead from Nexxa Auto",
+      from: `"Nexxa Auto" <noreply@nexxaauto.com>`,
+      replyTo: email || "noreply@nexxaauto.com",
+      to: "nexxaauto@gmail.com", // Primary inbox
+      bcc: "nexxaleads@gmail.com", // Optional backup inbox
+      subject: `New Inquiry from ${name || "Customer"} (#${uniqueId})`,
       html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
-          
+          <h2>New Client Inquiry</h2>
           <p><b>Name:</b> ${name}</p>
           <p><b>Email:</b> ${email}</p>
           <p><b>Phone:</b> ${phone}</p>
-          <p><b>ZIP:</b> ${zip}</p>
+          <p><b>Pincode:</b> ${zip}</p>
           <hr/>
-          <p><b>Year:</b> ${year}</p>
-          <p><b>Make:</b> ${make}</p>
-          <p><b>Model:</b> ${model}</p>
-          <p><b>Part:</b> ${part}</p>
-          <p><b>Stock:</b> ${stock}</p>
+          <p><b>Vehicle Details:</b></p>
+          <p>Year: ${year}</p>
+          <p>Make: ${make}</p>
+          <p>Model: ${model}</p>
+          <p>Part Requested: ${part}</p>
           <hr/>
-          <p><b>Message:</b> ${message}</p>
-          <p style="font-size:12px;color:#777;">Sent automatically via NexxaAuto.com</p>
+          <p style="font-size:12px;color:#777;">
+            Sent automatically from NexxaAuto.com (Production)
+          </p>
         </div>
       `,
-      // ✅ Envelope ensures correct actual sending addresses
       envelope: {
-        from: "noreply@nexxaauto.com", // must match your authenticated IONOS sender
-        to: "noreply@nexxaauto.com",
-        bcc: "ksaybas3@gmail.com",
+        from: "noreply@nexxaauto.com",
+        to: "nexxaauto@gmail.com",
+        bcc: "nexxaleads@gmail.com",
       },
     };
 
-    // ✅ Send email
+    // Send mail
     await transporter.sendMail(mailOptions);
 
-    console.log("✅ Email sent successfully!");
-    res.status(200).json({ success: true, message: "Email sent successfully!" });
-  } catch (err) {
-    console.error("❌ Email Error:", err);
-    res.status(500).json({ success: false, message: "Failed to send email" });
+    console.log("Email sent successfully to:", mailOptions.to);
+    res.status(200).json({ success: true, message: "Email sent successfully." });
+  } catch (error) {
+    console.error("Email Error:", error.message);
+    res.status(500).json({ success: false, message: "Failed to send email." });
   }
 });
 
-// === ✅ Test route ===
+// === ROOT ROUTE ===
 app.get("/", (req, res) => {
-  res.send("🚀 Nexxa Auto Mail API Running Successfully!");
+  res.send("Nexxa Auto Mail API Running on Vercel Environment");
 });
 
-// === Start server ===
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-
+// === EXPORT FOR VERCEL ===
 export default app;
